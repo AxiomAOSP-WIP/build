@@ -147,6 +147,13 @@ function check_product()
         echo "Couldn't locate the top of the tree.  Try setting TOP." >&2
         return
     fi
+    if (echo -n $1 | grep -q -e "^axiomos_") ; then
+        AXIOMOS_BUILD=$(echo -n $1 | sed -e 's/^axiomos_//g')
+    else
+        AXIOMOS_BUILD=
+    fi
+    export AXIOMOS_BUILD
+
         TARGET_PRODUCT=$1 \
         TARGET_BUILD_VARIANT= \
         TARGET_BUILD_TYPE= \
@@ -359,6 +366,7 @@ function set_stuff_for_environment()
     setpaths
     set_sequence_number
 
+    export ANDROID_BUILD_TOP=$(gettop)
     # With this environment variable new GCC can apply colors to warnings/errors
     export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 }
@@ -754,6 +762,8 @@ function lunch()
         return 1
     fi
 
+    check_product $product
+
     TARGET_PRODUCT=$product \
     TARGET_BUILD_VARIANT=$variant \
     TARGET_PLATFORM_VERSION=$version \
@@ -781,6 +791,8 @@ function lunch()
     fi
 
     [[ -n "${ANDROID_QUIET_BUILD:-}" ]] || echo
+
+    fixup_common_out_dir
 
     set_stuff_for_environment
     [[ -n "${ANDROID_QUIET_BUILD:-}" ]] || printconfig
@@ -1962,5 +1974,3 @@ function showcommands() {
 validate_current_shell
 source_vendorsetup
 addcompletions
-
-export ANDROID_BUILD_TOP=$(gettop)
