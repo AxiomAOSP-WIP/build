@@ -6179,7 +6179,7 @@ INTERNAL_OTA_METADATA := $(PRODUCT_OUT)/ota_metadata
 $(call declare-0p-target,$(INTERNAL_OTA_METADATA))
 
 ifeq ($(TARGET_BUILD_VARIANT),user)
-    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
+    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 else
 ifneq ($(AXIOM_BUILD),)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
