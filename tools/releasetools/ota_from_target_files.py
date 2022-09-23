@@ -320,7 +320,7 @@ OPTIONS.compressor_types = None
 OPTIONS.enable_zucchini = True
 OPTIONS.enable_lz4diff = False
 OPTIONS.vabc_compression_param = None
-OPTIONS.backuptool = False
+OPTIONS.backuptool = True
 
 POSTINSTALL_CONFIG = 'META/postinstall_config.txt'
 DYNAMIC_PARTITION_INFO = 'META/dynamic_partitions_info.txt'
